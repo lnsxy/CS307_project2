@@ -14,7 +14,7 @@ create table tmp_staff(
 create table tmp_record(
     Item_Name varchar(80),
     Item_Class varchar(80),
-    Item_Price int,
+    Item_Price float,
     Retrieval_City varchar(80),
     Retrieval_Courier varchar(80),
     Delivery_City varchar(80),
@@ -32,7 +32,6 @@ create table tmp_record(
     Item_State varchar(80)
 
 );
-
 copy tmp_staff from '/home/kali/Desktop/staffs.csv' csv;
 copy tmp_record from '/home/kali/Desktop/records.csv' csv;
 
@@ -46,7 +45,7 @@ insert into company(
     select distinct company from tmp_staff where company is not null
 );
 insert into item (
-    select Item_Name,Item_Class,Item_Price,Item_State,Ship_Name,Container_Code from tmp_record
+    select Item_Name,Item_Class,Item_Price,Item_State,Container_Code from tmp_record
 );
 insert into courier (
     select Name,Phone,Age,Password,Gender,Company,City from tmp_staff where type='Courier'
@@ -61,7 +60,7 @@ insert into sustc_department_manager (
     select Name,Phone,Age,Password,Gender,Company,City from tmp_staff where type='SUSTC Department Manager'
 );
 
-insert into ship(   
+insert into ship(
     select distinct Ship_Name,Company_Name from tmp_record where Ship_Name is not null
 );
 
@@ -74,7 +73,7 @@ insert into export(
 );
 
 insert into retrieval(
-    select Item_Name,Retrieval_Courier from tmp_record  
+    select Item_Name,Retrieval_Courier from tmp_record
 );
 
 insert into delivery(
